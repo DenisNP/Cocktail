@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
-let current = '5|100|100|100|0';
+let current = '5|255|255|255|0';
 app.get('/set', (req, res) => {
     current = req.query.value;
     res.send(`Set to: ${current}`);
