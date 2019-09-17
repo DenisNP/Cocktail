@@ -10,12 +10,13 @@ app.get('/set', (req, res) => {
     res.send(`Set to: ${current}`);
 });
 app.get('/current', (req, res) => {
+    const was = current;
     const c = current.split('|');
     if (Number.parseInt(c[c.length - 1], 10) === 1) {
         c[c.length - 1] = '0';
         current = c.join('|');
     }
-    res.send(current);
+    res.send(was);
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}!`));
