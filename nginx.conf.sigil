@@ -9,8 +9,8 @@ server {
   listen      [::]:{{ $listen_port }};
   listen      {{ $listen_port }};
   {{ if $.NOSSL_SERVER_NAME }}server_name {{ $.NOSSL_SERVER_NAME }}; {{ end }}
-  access_log  {{ $.NGINX_LOG_ROOT }}/{{ $.APP }}-access.log;
-  error_log   {{ $.NGINX_LOG_ROOT }}/{{ $.APP }}-error.log;
+  access_log  /var/log/nginx/{{ $.APP }}-access.log;
+  error_log   /var/log/nginx/{{ $.APP }}-error.log;
 
   location    / {
 
@@ -57,8 +57,8 @@ server {
   listen      {{ $listen_port }} ssl {{ if eq $.HTTP2_SUPPORTED "true" }}http2{{ else if eq $.SPDY_SUPPORTED "true" }}spdy{{ end }};
   {{ if $.SSL_SERVER_NAME }}server_name {{ $.SSL_SERVER_NAME }}; {{ end }}
   {{ if $.NOSSL_SERVER_NAME }}server_name {{ $.NOSSL_SERVER_NAME }}; {{ end }}
-  access_log  {{ $.NGINX_LOG_ROOT }}/{{ $.APP }}-access.log;
-  error_log   {{ $.NGINX_LOG_ROOT }}/{{ $.APP }}-error.log;
+  access_log  /var/log/nginx/{{ $.APP }}-access.log;
+  error_log   /var/log/nginx/{{ $.APP }}-error.log;
 
   ssl_certificate           {{ $.APP_SSL_PATH }}/server.crt;
   ssl_certificate_key       {{ $.APP_SSL_PATH }}/server.key;
@@ -120,8 +120,8 @@ server {
   listen      [::]:{{ $listen_port }} http2;
   listen      {{ $listen_port }} http2;
   {{ if $.NOSSL_SERVER_NAME }}server_name {{ $.NOSSL_SERVER_NAME }}; {{ end }}
-  access_log  {{ $.NGINX_LOG_ROOT }}/{{ $.APP }}-access.log;
-  error_log   {{ $.NGINX_LOG_ROOT }}/{{ $.APP }}-error.log;
+  access_log  /var/log/nginx/{{ $.APP }}-access.log;
+  error_log   /var/log/nginx/{{ $.APP }}-error.log;
   location    / {
     grpc_pass  grpc://{{ $.APP }}-{{ $upstream_port }};
   }
@@ -134,8 +134,8 @@ server {
   listen      [::]:{{ $listen_port }} ssl http2;
   listen      {{ $listen_port }} ssl http2;
   {{ if $.NOSSL_SERVER_NAME }}server_name {{ $.NOSSL_SERVER_NAME }}; {{ end }}
-  access_log  {{ $.NGINX_LOG_ROOT }}/{{ $.APP }}-access.log;
-  error_log   {{ $.NGINX_LOG_ROOT }}/{{ $.APP }}-error.log;
+  access_log  /var/log/nginx/{{ $.APP }}-access.log;
+  error_log   /var/log/nginx/{{ $.APP }}-error.log;
 
   ssl_certificate           {{ $.APP_SSL_PATH }}/server.crt;
   ssl_certificate_key       {{ $.APP_SSL_PATH }}/server.key;
